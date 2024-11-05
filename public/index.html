@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Chat en Tiempo Real</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Contenedor de Login -->
+        <div id="login-container" class="text-center">
+            <h2 style="color: #f0ad4e;">Iniciar sesión en el Chat</h2>
+            <!-- Campo de entrada para el nombre de usuario con estilo del chat -->
+            <input type="text" id="username" class="form-control my-3 login-input" placeholder="Ingresa tu nombre" required>
+
+            <!-- Botón de "Unirse" con el nuevo estilo -->
+            <button class="button" onclick="joinChat()">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75"></path>
+                </svg>
+                <div class="text">
+                    Unirse
+                </div>
+            </button>
+        </div>
+
+        <!-- Contenedor del Chat -->
+        <div id="chat-container" class="d-none">
+            <h2 class="text-center" style="color: white;">Sala de Chat</h2>
+            <div id="messages" class="border rounded p-3" style="height: 500px; overflow-y: auto; background-color: #323233;"></div>
+            
+            <!-- Controles de entrada de mensaje -->
+            <div class="input-group mt-3">
+                <!-- Campo de entrada de texto -->
+                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+            
+                <!-- Botón de adjuntar archivos -->
+                <div class="input-group-append">
+                    <input type="file" id="file-input" class="d-none" accept="image/*,audio/*,video/*" onchange="sendFile(event)">
+                    <!-- Botón de adjuntar archivos con ícono SVG en blanco -->
+                    <button class="btn btn-secondary attach-button" onclick="document.getElementById('file-input').click()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 -0.5 25 25" stroke="white" fill="none" class="bi bi-attach">
+                            <path stroke-linejoin="round" stroke-linecap="round" stroke-width="1.5" d="M15.17 11.053L11.18 15.315C10.8416 15.6932 10.3599 15.9119 9.85236 15.9178C9.34487 15.9237 8.85821 15.7162 8.51104 15.346C7.74412 14.5454 7.757 13.2788 8.54004 12.494L13.899 6.763C14.4902 6.10491 15.3315 5.72677 16.2161 5.72163C17.1006 5.71649 17.9463 6.08482 18.545 6.736C19.8222 8.14736 19.8131 10.2995 18.524 11.7L12.842 17.771C12.0334 18.5827 10.9265 19.0261 9.78113 18.9971C8.63575 18.9682 7.55268 18.4695 6.78604 17.618C5.0337 15.6414 5.07705 12.6549 6.88604 10.73L12.253 5"></path>
+                        </svg>
+                    </button>
+
+                    
+                    <!-- Botón de grabar audio -->
+                    <button class="btn btn-primary record-button" onclick="startRecording()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-mic-fill" viewBox="0 0 16 16">
+                            <path d="M5 3a3 3 0 0 1 6 0v5a3 3 0 0 1-6 0V3z"></path>
+                            <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"></path>
+                        </svg>
+                    </button>
+
+                    <!-- Botón de parar grabación con ícono SVG -->
+                    <button class="btn btn-danger stop-recording-button d-none" id="stop-recording-btn" onclick="stopRecording()">
+                        <svg fill="#ffffff" height="24" width="24" xmlns="http://www.w3.org/2000/svg" viewBox="-33 -33 396.00 396.00" stroke="#ffffff">
+                            <g id="SVGRepo_iconCarrier">
+                                <path d="M315,0H15C6.716,0,0,6.716,0,15v300c0,8.284,6.716,15,15,15h300c8.284,0,15-6.716,15-15V15 C330,6.716,323.285,0,315,0z M300,300H30V30h270V300z"></path>
+                            </g>
+                        </svg>
+                    </button>
+
+                    <!-- Botón de enviar con icono y animación personalizada -->
+                    <button class="send-button" onclick="sendMessage()">
+                        <div class="svg-wrapper-1">
+                            <div class="svg-wrapper">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    width="24"
+                                    height="24"
+                                >
+                                    <path fill="none" d="M0 0h24v24H0z"></path>
+                                    <path
+                                        fill="currentColor"
+                                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                                    ></path>
+                                </svg>
+                            </div>
+                        </div>
+                        <span>Enviar</span>
+                    </button>
+                </div>
+            </div>           
+        </div>
+    </div>
+
+    <script src="client.js"></script>
+</body>
+</html>

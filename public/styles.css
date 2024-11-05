@@ -1,0 +1,303 @@
+/* Asegúrate de que el html y el body ocupen toda la altura */
+html, body {
+    background-color: #323233;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajustar el tamaño del contenedor */
+#chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 95vh;
+    width: 90vw;
+    max-width: 900px;
+    background-color: #323233;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Aumentar la altura del área de mensajes */
+#messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    background-color: #323233;
+    padding: 10px;
+    border-radius: 5px;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+/* Ajustes para el área de entrada de mensajes */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    margin-top: auto;
+    padding: 5px 0;
+}
+
+/* Ajuste del input */
+#message-input {
+    flex: 1;
+    font-size: 1em;
+    padding: 0.7em 1em;
+    border-radius: 16px 0 0 16px; 
+    border: 1px solid #ccc;
+    height: 45px;
+}
+
+/* Botones de adjuntar y grabar */
+.attach-button, .record-button, .stop-recording-button {
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.7em;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    height: 45px;
+}
+
+/* Botón de adjuntar (clip) */
+.attach-button {
+    background-color: #6c757d;
+    color: white;
+    border-radius: 0;
+}
+
+.attach-button:hover {
+    background-color: #5a6268;
+}
+
+/* Botón de grabar (micrófono) */
+.record-button {
+    background-color: #007bff;
+    color: white;
+    border-radius: 0;
+}
+
+.record-button:hover {
+    background-color: #0069d9;
+}
+
+/* Botón de detener grabación (cuadrado rojo) */
+.stop-recording-button {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 0;
+}
+
+.stop-recording-button:hover {
+    background-color: #c82333;
+}
+
+/* Estilo general del contenedor de mensajes */
+.message-container {
+    max-width: 90%;
+    padding: 10px;
+    margin: 5px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.95em;
+    color: white;
+}
+
+/* Mensajes del usuario actual (lado derecho) */
+.message-right {
+    align-self: flex-end;
+    background-color: #f0ad4e;
+    color: #000;
+    text-align: left;
+    border-radius: 10px 10px 0 10px;
+    margin-left: auto;
+    padding: 8px 12px;
+}
+
+/* Mensajes de otros usuarios (lado izquierdo) */
+.message-left {
+    align-self: flex-start;
+    background-color: #6c757d;
+    color: #fff;
+    text-align: left;
+    border-radius: 10px 10px 10px 0;
+    margin-right: auto;
+    padding: 8px 12px;
+}
+
+
+/* Estilo para el nombre del usuario en cada mensaje */
+.message-user {
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+/* Botón de opciones en cada mensaje */
+.options-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    font-size: 1em;
+    color: #666;
+    cursor: pointer;
+}
+
+/* Estilo del menú desplegable para las opciones */
+.options-menu {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 5px;
+    background-color: #d45a5a;
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    width: 100px;
+}
+
+/* Opciones dentro del menú */
+.options-menu button {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    color: #fff;
+    cursor: pointer;
+}
+
+.options-menu button:hover {
+    background-color: #7e3737;
+    transition-duration: 0.3s;
+}
+
+/* Estilo para los mensajes del sistema (texto naranja centrado) */
+.message-system {
+    align-self: center;
+    color: #f0ad4e;
+    font-weight: bold;
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Estilos específicos para el botón de enviar */
+.send-button {
+    font-family: inherit;
+    font-size: 20px;
+    background: #f0ad4e;
+    color: white;
+    padding: 0.7em 1em;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 0 16px 16px 0;
+    overflow: hidden;
+    transition: all 0.2s;
+    cursor: pointer;
+    height: 45px;
+}
+
+.send-button span {
+    display: block;
+    margin-left: 0.3em;
+    transition: all 0.3s ease-in-out;
+}
+
+.send-button svg {
+    display: block;
+    transform-origin: center center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.send-button:hover .svg-wrapper {
+    animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+.send-button:hover svg {
+    transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.send-button:hover span {
+    transform: translateX(5em);
+}
+
+.send-button:active {
+    transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+    from {
+        transform: translateY(0.1em);
+    }
+    to {
+        transform: translateY(-0.1em);
+    }
+}
+
+/* Estilo para ajustar las imágenes y videos al área del mensaje */
+.message-container img,
+.message-container video {
+    max-width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+
+/* Estilo del campo de entrada de usuario para que combine con el campo de mensaje del chat */
+.login-input {
+    font-size: 1em;
+    padding: 0.7em 1em;
+    border-radius: 16px;
+    border: 1px solid #ccc;
+    height: 45px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Estilo del botón de "Unirse" */
+.button {
+    background-color: #ffffff00;
+    color: #fff;
+    width: 8.5em;
+    height: 2.9em;
+    border: #f0ad4e 0.2em solid;
+    border-radius: 11px;
+    text-align: right;
+    transition: all 0.6s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.button:hover {
+    background-color: #f0ad4e;
+    cursor: pointer;
+}
+
+.button svg {
+    width: 1.6em;
+    margin: -0.2em 0.8em 1em;
+    position: absolute;
+    display: flex;
+    transition: all 0.6s ease;
+}
+
+.button:hover svg {
+    transform: translateX(5px);
+}
+
+.text {
+    margin: 0 1.5em;
+    font-weight: bold;
+}
